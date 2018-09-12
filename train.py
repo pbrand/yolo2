@@ -5,8 +5,8 @@ import cv2
 
 SCALE = 32
 GRID_W, GRID_H = 18, 10
-N_CLASSES = 6
-N_ANCHORS = 4
+N_CLASSES = 80
+N_ANCHORS = 5
 IMAGE_HEIGHT, IMAGE_WIDTH, IMAGE_DEPTH = GRID_H*SCALE, GRID_W*SCALE, 3
 
 LAMBDA_COORD = 5.0
@@ -14,7 +14,7 @@ LAMBDA_NO_OBJ = 0.5
 BATCH_SIZE = 24
 LEARNING_RATE = 0.0001
 NUM_ITERS = 100000
-TFRECORD_PATH = './data.tfrecord'
+TFRECORD_PATH = '/media/patrick/WD-PBrand/coco/data.tfrecord'
 MODEL_PATH, SAVE_INTERVAL = './model', 10000
 
 # ---------------------------------------------------------------------------------
@@ -114,6 +114,8 @@ def yolo_net(x, train_logical):
 	return y
 
 def slice_tensor(x, start, end=None):
+	if end is None:
+            end = start
 	
 	if end < 0:
 		y = x[...,start:]
@@ -208,7 +210,7 @@ def train():
 
 		_, loss_data, data = sess.run([train_step, loss, y], feed_dict={train_flag: True, image: image_data, label: label_data})
 
-		print 'iter: %i, loss: %f' % (i, loss_data)
+		print('iter: %i, loss: %f' % (i, loss_data))
 
 		if (i+1)%SAVE_INTERVAL == 0:
 			make_dir(MODEL_PATH)
