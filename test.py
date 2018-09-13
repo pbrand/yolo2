@@ -143,11 +143,11 @@ def draw(classes,rois, indxs, img, names, colors):
 def test():
 
 	important_classes, names, colors = read_labels('./yolo.labels')
-	anchors = read_anchors_file('anchors.txt')
+	anchors = read_anchors_file('/media/patrick/WD-PBrand/coco/anchors.txt')
 
 	sess = tf.Session() 
-	saver = tf.train.import_meta_graph('./model/yolo.meta')
-	saver.restore(sess,'./model/yolo')
+	saver = tf.train.import_meta_graph('/media/patrick/WD-PBrand/coco/model/yolo.meta')
+	saver.restore(sess,'/media/patrick/WD-PBrand/coco/model/yolo')
 
 	graph = tf.get_default_graph()
 	image = graph.get_tensor_by_name("image_placeholder:0")
